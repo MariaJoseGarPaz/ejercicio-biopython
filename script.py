@@ -20,5 +20,4 @@ def summarize_contents(filename):
                 print("\n")
                 counter=counter+1
                 ##Aqui debe ir lo de  position
-                ##Aqui debe ir lo de location
 summarize_contents(filename)
