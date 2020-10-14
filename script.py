@@ -15,6 +15,8 @@ def summarize_contents(filename):
                 print(counter, ".-")
                 print("Name: ", seq_record.name)
                 print("ID:",seq_record.id)
+                for seq_feature in seq_record.features :
+                        print('Start: %d, Stop: %d'%(int(seq_feature.location.start),int(seq_feature.location.end)))
                 print("\n")
                 counter=counter+1
                 ##Aqui debe ir lo de  position
