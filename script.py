@@ -1,26 +1,29 @@
 from Bio import SeqIO
-from Bio.SeqFeature import FeatureLocation, SeqFeature
 from Bio.SeqRecord import SeqRecord
 import os
-filename= "/mnt/c/Users/alma_/Desktop/ls_orchid.gbk"
+import sys
+filename= "/mnt/c/Users/alma_/Desktop/bioinfo/ls_orchid.gbk"
 def summarize_contents(filename):
-	all_records=[]
-	records = list(SeqIO.parse(filename, "genbank"))
-	print ("Path: ", os.path.dirname(filename))
-	print("num_records = %i records" % len(records))
-	print("\n\n")
-	counter=1
-	for seq_record in SeqIO.parse(filename, "genbank"):
-		all_records.append(seq_record.name)
-		print(counter, ".-")
-		print("Name: ", seq_record.name)
-		print("ID:",seq_record.id)
-		print("\n")
-		print ("Location: ")
-		for seq_feature in seq_record.features :
-                        print('Start: %d, Stop: %d'%(int(seq_feature.location.start),int(seq_feature.location.end)))
-		print("\n")
-		counter=counter+1
-		##Aqui debe ir lo de location
+        AllRecords=[]
+        FileList = []
+        FileList = os.path.split(filename)
+        print("File : ", FileList[1])
+        records = list(SeqIO.parse(filename, "genbank"))
+        path=  os.path.dirname(filename)
+        base=os.path.basename(path)
+        os.path.splitext(base)
+        print(base)
+        print ("Path: ", path)
+        print("num_records = %i records" % len(records))
+        print("\n\n")
+        counter=1
+        print("Records")
+        for seq_record in SeqIO.parse(filename, "genbank"):
+                AllRecords.append(seq_record.name)
+                print(counter, ".-")
+                print("-ID: ", seq_record.id)
+                print("-Name: ", seq_record.name)
+                print("-Description: ", seq_record.description)
+                counter=counter+1
+                print("\n")
 summarize_contents(filename)
-
