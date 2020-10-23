@@ -13,14 +13,11 @@ def summarize_contents(filename):
         print ("Path: ", path)
         print("num_records = %i records" % len(records))
         print("\n\n")
-        counter=1
-        print("Records")
         for seq_record in SeqIO.parse(filename, "genbank"):
                 AllRecords.append(seq_record.name)
-                print(counter, ".-")
+             
                 print("-ID: ", seq_record.id)
                 print("-Name: ", seq_record.name)
                 print("-Description: ", seq_record.description)
-                counter=counter+1
                 print("\n")
 summarize_contents(filename)
