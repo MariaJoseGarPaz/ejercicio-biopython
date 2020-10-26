@@ -2,7 +2,7 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import os
 import sys
-filename= "/mnt/c/Users/alma_/Desktop/ejercicio-biopython/data/ls_orchid.gbk"
+filename= "/mnt/c/Users/alma_/Desktop/bioinfo/ejercicio-biopython/data/AF323668.gbk"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -17,18 +17,21 @@ def summarize_contents(filename):
                 pass
 
         records = list(SeqIO.parse(filename, type_file))
-        cadena = " "
-        path=  os.path.dirname(filename)
+        diccionario = {}
 
-        cadena=("File: " + FileList[1])
-        cadena+= ("\nPath: " + path)
-        cadena+= ("\nnum_records= "+ str(len(records)))
+       
+        diccionario['File: ']= FileList[1]
+        diccionario['Path: ' ]= FileList[0]
+        diccionario['num_records=' ]= len(records)
 
+        diccionario['Name:'] = []
+        diccionario['-ID:'] = []
+        diccionario['Description: '] = []
         for seq_record in SeqIO.parse(filename, type_file):
-                cadena+= ("\n-ID: " + str(seq_record.id))
-                cadena+=("\nName: " + str(seq_record.name))
-                cadena+=("\nDescription: " + str(seq_record.description))
-        return cadena
+                diccionario['-ID:'].append(seq_record.name)
+                diccionario['Name:'].append(seq_record.id)
+                diccionario['Description: '].append(seq_record.description)
+        return diccionario
 
 if __name__ == "__main__":
         resultado = summarize_contents(filename)
