@@ -2,7 +2,7 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import os
 import sys
-filename= "/mnt/c/Users/alma_/Desktop/bioinfo/ejercicio-biopython/data/AF323668.gbk"
+filename= os.path.abspath("data/ls_orchid.gbk")
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
