@@ -1,8 +1,11 @@
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
+from Bio.Seq import Seq
 import os
 import sys
 filename= os.path.abspath("data/NC_002703.gbk")
+seq1= "attAg"
+seq2= "ggct"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -32,8 +35,16 @@ def summarize_contents(filename):
                 diccionario['Name:'].append(seq_record.id)
                 diccionario['Description: '].append(seq_record.description)
         return diccionario
+def concatenate_and_get_reverse_of_complement(sequence_a, sequence_b):
+
+        SEQuence_a= Seq(sequence_a)
+        SEQuence_b = Seq(sequence_b)
+        concatenated= (SEQuence_a + SEQuence_b)
+        reverse = concatenated.reverse_complement()
+        return reverse.upper()
 
 if __name__ == "__main__":
         resultado = summarize_contents(filename)
         print(resultado)
-
+        ReverseComplement = concatenate_and_get_reverse_of_complement(seq1, seq2)
+        print(ReverseComplement)
