@@ -20,3 +20,7 @@ class MiPrueba(unittest.TestCase):
 
 		s = script.summarize_contents(os.path.abspath("data/AF323668.gbk"))
 		self.assertDictEqual({'File: ': 'AF323668.gbk', 'Path: ': os.path.abspath('data'), 'num_records=': 1, 'Name:': ['AF323668.1'], '-ID:': ['AF323668'], 'Description: ': ['Bacteriophage bIL285, complete genome']},s)
+	
+	def test_concatenate_and_get_reverse_of_complement(self):
+		c = script.concatenate_and_get_reverse_of_complement("AtggCtAtgc","GcgcgTatATAcg")
+		self.assertEqual("CGTATATACGCGCGCATAGCCAT",c)
