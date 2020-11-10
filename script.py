@@ -7,7 +7,7 @@ import sys
 filename= os.path.abspath("data/NC_002703.gbk")
 seq1= "attAg"
 seq2= "ggct"
-sequence ="TTGGCCATTGTAGGCCGCTGAAAGGGTGCCCGATAG"
+sequence ="GCCATTGTAATGGGCCGCAAGGGTGCCCGA"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -44,12 +44,11 @@ def concatenate_and_get_reverse_of_complement(sequence_a, sequence_b):
         concatenated= (SEQuence_a + SEQuence_b)
         reverse = concatenated.reverse_complement()
         return reverse.upper()
-def print_proteins_and_codons_using_standard_table(sequence):
+def print_protein_and_codons_using_standard_table(sequence):
 
 
         #Conversión de string a Seq
         DNAsequence= Seq(sequence)
-        print(DNAsequence.translate())
         
         diccionario={}
 
@@ -101,9 +100,5 @@ def print_proteins_and_codons_using_standard_table(sequence):
                                 
 
 if __name__ == "__main__":
-        resultado = summarize_contents(filename)
-        print(resultado)
-        ReverseComplement = concatenate_and_get_reverse_of_complement(seq1, seq2)
-        print(ReverseComplement)
-        proteins = print_proteins_and_codons_using_standard_table(sequence)
+        proteins = print_protein_and_codons_using_standard_table(sequence)
         print(proteins)

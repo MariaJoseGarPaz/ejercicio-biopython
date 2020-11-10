@@ -1,5 +1,6 @@
 import unittest
 import script
+from Bio.Seq import Seq
 import os
 class MiPrueba(unittest.TestCase):
 	def test_summarize_contents(self):
@@ -37,3 +38,23 @@ class MiPrueba(unittest.TestCase):
 
 		c = script.concatenate_and_get_reverse_of_complement("GATAATACA","ccgatatcga")
 		self.assertEqual("TCGATATCGGTGTATTATC",c)
+
+	def test_print_protein_and_codons_using_standard_table(self)
+
+		p = script.print_protein_and_codons_using_standard_table("TTGGCCATTGTAGGCCGCTGAAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('UUGGCCAUUGUAGGCCGCUGAAAGGGUGCCCGAUAG'), 'proteins': [Seq('LAIVGR')], 'stop_codons': [Seq('TGA')]},p)
+
+		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCUGAAAGGGUGCCCGAUAG'), 'proteins': [Seq('MAIVMGR')], 'stop_codons': [Seq('TGA')]},p)
+		
+		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, "umnert")
+		
+		self.assertRaises(Exception, script.print_protein_and_codons_using_standard_table, None)
+
+
+		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
+		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
+
+		
+		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
+		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
