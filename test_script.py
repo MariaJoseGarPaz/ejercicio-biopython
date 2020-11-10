@@ -24,3 +24,16 @@ class MiPrueba(unittest.TestCase):
 	def test_concatenate_and_get_reverse_of_complement(self):
 		c = script.concatenate_and_get_reverse_of_complement("AtggCtAtgc","GcgcgTatATAcg")
 		self.assertEqual("CGTATATACGCGCGCATAGCCAT",c)
+
+		c = script.concatenate_and_get_reverse_of_complement("WsAgctAGN","CCTAGT")
+		self.assertEqual("ACTAGGNCTAGCTSW",c)
+
+		
+		self.assertRaises(Exception,script.concatenate_and_get_reverse_of_complement,None, None)
+		self.assertRaises(Exception,script.concatenate_and_get_reverse_of_complement,"ATAATA", "PRUEBAMARIA")
+
+		c = script.concatenate_and_get_reverse_of_complement("aactgatgca","ATACAGATA")
+		self.assertEqual("TATCTGTATTGCATCAGTT",c)
+
+		c = script.concatenate_and_get_reverse_of_complement("GATAATACA","ccgatatcga")
+		self.assertEqual("TCGATATCGGTGTATTATC",c)
