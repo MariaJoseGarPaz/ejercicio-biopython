@@ -7,7 +7,7 @@ import sys
 filename= os.path.abspath("data/NC_002703.gbk")
 seq1= "attAg"
 seq2= "ggct"
-sequence =" "
+sequence ="ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
