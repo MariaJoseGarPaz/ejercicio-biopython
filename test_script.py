@@ -39,7 +39,7 @@ class MiPrueba(unittest.TestCase):
 		c = script.concatenate_and_get_reverse_of_complement("GATAATACA","ccgatatcga")
 		self.assertEqual("TCGATATCGGTGTATTATC",c)
 
-	def test_print_protein_and_codons_using_standard_table(self)
+	def test_print_protein_and_codons_using_standard_table(self):
 
 		p = script.print_protein_and_codons_using_standard_table("TTGGCCATTGTAGGCCGCTGAAAGGGTGCCCGATAG")
 		self.assertDictEqual({'mRNA': Seq('UUGGCCAUUGUAGGCCGCUGAAAGGGUGCCCGAUAG'), 'proteins': [Seq('LAIVGR')], 'stop_codons': [Seq('TGA')]},p)
@@ -58,3 +58,5 @@ class MiPrueba(unittest.TestCase):
 		
 		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
 		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
+
+	
