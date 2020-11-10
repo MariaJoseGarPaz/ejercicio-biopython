@@ -7,7 +7,7 @@ import sys
 filename= os.path.abspath("data/NC_002703.gbk")
 seq1= "attAg"
 seq2= "ggct"
-sequence ="ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
+sequence ="TTGGCCATTGTAGGCCGCTGAAAGGGTGCCCGATAG"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -45,45 +45,59 @@ def concatenate_and_get_reverse_of_complement(sequence_a, sequence_b):
         reverse = concatenated.reverse_complement()
         return reverse.upper()
 def print_proteins_and_codons_using_standard_table(sequence):
+
+
+        #Conversión de string a Seq
         DNAsequence= Seq(sequence)
-        diccionario={}
+        print(DNAsequence.translate())
         
+        diccionario={}
+
+        #Definición de las keys del diccionario 
         diccionario['mRNA']= DNAsequence.transcribe().upper()
         diccionario['proteins'] = []
         diccionario['stop_codons'] = []
         
-        
-        Amino_Acid = DNAsequence.translate()
-        Proteins = Amino_Acid.split('*')
+        #Traducción usando la tabla standard
+        Amino_Acid = DNAsequence.translate(table= "Standard")
+        i = 0
 
-        
-        ProteinasFinales = []
-
-        for i in range(len(Proteins)):
-                inicio = Proteins[i].find('M')
-                if inicio != -1:
-                        ProteinasFinales.append(Proteins[i][inicio:])
-        diccionario['proteins']= ProteinasFinales
-
-        if(diccionario['proteins']) == []:
-                print ("Not proteins were found")  
+        #Ciclo que recorre la secuencia buscando codones de inicio y de paro para añadirlo a la lista proteins
+        while i < (len(DNAsequence)):
+                if (DNAsequence[i*3:i*3+3].upper() == "TTG") or (DNAsequence[i*3:i*3+3].upper() == "CTG") or (DNAsequence[i*3:i*3+3].upper() == "ATG"):
                         
-        for i in range((len(DNAsequence)),3):
-                if(DNAsequence[i*3:i*3+3] == "TAG" ) or (DNAsequence[i*3:i*3+3] == "TAA") or (DNAsequence[i*3:i*3+3] == "TGA") :
-                        diccionario['stop_codons'].append(DNAsequence[i*3:i*3+3])
-                        
+                        if i+1 == len(DNAsequence):
+                                diccionario['proteins'].append(Amino_Acid[i:])
+                                break
+                        j = i+1
+                        while j < (len(DNAsequence)):
+                                if(DNAsequence[j*3:j*3+3] == "TAG" ) or (DNAsequence[j*3:j*3+3] == "TAA") or (DNAsequence[j*3:j*3+3] == "TGA") :
+                                        diccionario['proteins'].append(Amino_Acid[i:j])
+                                        diccionario['stop_codons'].append(DNAsequence[j*3:j*3+3])
+                                        i = j
+                                        break
+                                j= j+1
+                #SI NO HAY CODON DE INICIO Y CODON DE PARO NO SE AGREGA A LA LISTA
+                if((DNAsequence[i*3:i*3+3].upper() == "TTG") or (DNAsequence[i*3:i*3+3].upper() == "CTG") or (DNAsequence[i*3:i*3+3].upper() == "ATG")) and ((DNAsequence[j*3:j*3+3] == "TAG" ) or (DNAsequence[j*3:j*3+3] == "TAA") or (DNAsequence[j*3:j*3+3] == "TGA")):
+                        diccionario['proteins'].append(Amino_Acid[i:j])
+                        break
+                i= i+1
                 
-                        #if i+1 == len(DNAsequence):
-                                #break
+                       
         
         
                         
 
-                
+        #Si la lista esta vacía, no hay codones de paro
         if diccionario['stop_codons'] == []:
                 diccionario['stop_codons'] = "Not stop codons were found."   
+
+        #Si la lista esta vacía, no hay proteínas
+        if diccionario['proteins'] == []:
+                diccionario['proteins'] = "Not proteins were found."
                 
-        print(diccionario)
+        
+        return diccionario
                                 
 
 if __name__ == "__main__":
