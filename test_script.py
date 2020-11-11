@@ -55,7 +55,6 @@ class MiPrueba(unittest.TestCase):
 		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
 		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
 
-		
 		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
 		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
 
