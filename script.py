@@ -8,7 +8,7 @@ import sys
 filename= os.path.abspath("data/NC_002703.gbk")
 seq1= "attAg"
 seq2= "ggct"
-sequence ="ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
+sequence ="TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -154,6 +154,6 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sequence):
 
 if __name__ == "__main__":
         proteins = print_protein_and_codons_using_standard_table(sequence)
-        print(proteins)
+        print("Using standard code:",proteins)
         mitocondrial = print_proteins_and_codons_using_mitocondrial_yeast_table(sequence)
-        print(mitocondrial)
+        print("Using mitochondrial code: ", mitocondrial)

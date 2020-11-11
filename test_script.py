@@ -59,4 +59,31 @@ class MiPrueba(unittest.TestCase):
 		p = script.print_protein_and_codons_using_standard_table("ATGGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
 		self.assertDictEqual({'mRNA': Seq('AUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
 
-	
+	def test_print_proteins_and_codons_using_mitocondrial_yeast_table(self):
+
+		#Codon de inicio y no de paro
+		p = script.print_proteins_and_codons_using_mitocondrial_yeast_table("ATAGCCATTGTAATGGGCCGCAAGGGTGCCCGA")
+		self.assertDictEqual({'mRNA': Seq('AUAGCCAUUGUAAUGGGCCGCAAGGGUGCCCGA'), 'proteins': 'Not proteins were found.', 'stop_codons': 'Not stop codons were found.'},p)
+
+		#Codon de inicio y de paro
+		p = script.print_proteins_and_codons_using_mitocondrial_yeast_table("ATAGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('AUAGCCAUUGUAAUGGGCCGCAAGGGUGCCCGAUAG'), 'proteins': [Seq('MAIVMGRKGAR')], 'stop_codons': [Seq('TAG')]},p)
+
+		#Codon de paro antes del de inicio
+		p = script.print_proteins_and_codons_using_mitocondrial_yeast_table("TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('UAGCCCAUAGCCAUUGUAAUGGGCCGCAAGGGUGCCCGAUAG'), 'proteins': [Seq('MAIVMGRKGAR')], 'stop_codons': [Seq('TAG')]},p)
+
+		#Codon de inicio en medio de la secuencia
+		p = script.print_proteins_and_codons_using_mitocondrial_yeast_table("CCCTTTATCCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('CCCUUUAUCCCCAUAGCCAUUGUAAUGGGCCGCAAGGGUGCCCGAUAG'), 'proteins': [Seq('MAIVMGRKGAR')], 'stop_codons': [Seq('TAG')]},p)
+
+		#Codon de inicio diferente a M
+		p = script.print_proteins_and_codons_using_mitocondrial_yeast_table("CCCTTTATCCCCGTGGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG")
+		self.assertDictEqual({'mRNA': Seq('CCCUUUAUCCCCGUGGCCAUUGUAAUGGGCCGCAAGGGUGCCCGAUAG'), 'proteins': [Seq('VAIVMGRKGAR')], 'stop_codons': [Seq('TAG')]},p)
+		
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "umnert")
+		
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
+		
+		
+		
