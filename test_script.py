@@ -84,6 +84,8 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "umnert")
 		
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
+
+		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGA TAG")
 		
 		
 		
