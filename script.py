@@ -167,3 +167,4 @@ def extract_sequences(file):
         
 if __name__ == "__main__":
         extract_sequences("data/sequences.fasta")
+
