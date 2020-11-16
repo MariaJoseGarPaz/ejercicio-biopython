@@ -4,11 +4,13 @@ from Bio.Seq import Seq
 from Bio.Data import CodonTable
 import os
 import sys
+import glob
+import os.path
 
 filename= os.path.abspath("data/NC_002703.gbk")
 seq1= "attAg"
 seq2= "ggct"
-sequence ="TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGA TAG"
+sequence ="TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGATAG"
 def summarize_contents(filename):
         FileList = []
         File_Extension = []
@@ -150,10 +152,18 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sequence):
                 diccionario['proteins'] = "Not proteins were found."
                 
         
-        return diccionario              
-
+        return diccionario
+def extract_sequences(file):
+        direction = os.path.abspath(file)
+        rec = list(SeqIO.parse( direction , "fasta"))
+        #rec = list(SeqIO.parse( direction , "genbank"))
+        for i in range(len(rec)):
+	
+                filename = open(f"sequence{i+1}.fasta", "w")
+                #filename = open(f"sequence{i+1}.gbk", "w")
+                filename.write('>' + rec[i].description + os.linesep)
+                filename.write(str(rec[i].seq))
+                filename.close()
+        
 if __name__ == "__main__":
-        proteins = print_protein_and_codons_using_standard_table(sequence)
-        print("Using standard code:",proteins)
-        mitocondrial = print_proteins_and_codons_using_mitocondrial_yeast_table(sequence)
-        print("Using mitochondrial code: ", mitocondrial)
+        extract_sequences("data/sequences.fasta")

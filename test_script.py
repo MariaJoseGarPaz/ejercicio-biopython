@@ -1,7 +1,10 @@
 import unittest
 import script
 from Bio.Seq import Seq
+from Bio import SeqIO
 import os
+
+import glob
 class MiPrueba(unittest.TestCase):
 	def test_summarize_contents(self):
 		s = script.summarize_contents(os.path.abspath("data/ls_orchid.gbk"))
@@ -84,7 +87,25 @@ class MiPrueba(unittest.TestCase):
 		
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
 
-		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, "TAGCCCATAGCCATTGTAATGGGCCGCAAGGGTGCCCGA TAG")
 		
 		
+
+	def test_extract_sequences(self):
 		
+		#Con esto lee los num_records
+		direction = os.path.abspath("data/sequences.fasta")
+		rec = (len(list(SeqIO.parse( direction , "fasta"))))
+		
+		#Se manda a llamar a la funcion para que genere los archivos, como no devuelve nada, nlc ponerlo en una variable 
+		script.extract_sequences("data/sequences.fasta") 
+		
+		#Con esto lee los archivos generados
+		filename= os.path.abspath("ejercicio-biopython")
+		FileList = os.path.split(filename)
+		myPath = FileList[0]
+		
+		number_files = len(glob.glob1(myPath,"*.fasta"))
+       
+
+		self.assertEqual(number_files, rec)
+
