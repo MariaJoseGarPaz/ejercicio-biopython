@@ -153,17 +153,20 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sequence):
                 
         
         return diccionario
-def extract_sequences(file):
-        direction = os.path.abspath(file)
+def extract_sequences(file_name):
+        direction = os.path.abspath(file_name)
+
         rec = list(SeqIO.parse( direction , "fasta"))
         #rec = list(SeqIO.parse( direction , "genbank"))
+
         for i in range(len(rec)):
 	
-                filename = open(f"sequence{i+1}.fasta", "w")
+                file_name = open(f"sequence{i+1}.fasta", "w")
                 #filename = open(f"sequence{i+1}.gbk", "w")
-                filename.write('>' + rec[i].description + os.linesep)
-                filename.write(str(rec[i].seq))
-                filename.close()
+                file_name.write('>' + rec[i].description +"\n" )
+                file_name.write(str(rec[i].seq))
+
+                file_name.close()
         
 if __name__ == "__main__":
         extract_sequences("data/sequences.fasta")
