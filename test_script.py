@@ -87,25 +87,25 @@ class MiPrueba(unittest.TestCase):
 		
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
 
-		
-		
-
 	def test_extract_sequences(self):
 		
 		#Con esto lee los num_records
-		direction = os.path.abspath("data/sequences.fasta")
-		rec = (len(list(SeqIO.parse( direction , "fasta"))))
-		
+		direction = os.path.abspath("data/ls_orchid.fasta")
+		rec = list(SeqIO.parse( direction , "fasta"))
+		number_records= len(rec)
 		#Se manda a llamar a la funcion para que genere los archivos, como no devuelve nada, nlc ponerlo en una variable 
-		script.extract_sequences("data/sequences.fasta") 
+		script.extract_sequences("data/ls_orchid.fasta", "genbank") 
 		
 		#Con esto lee los archivos generados
 		filename= os.path.abspath("ejercicio-biopython")
 		FileList = os.path.split(filename)
 		myPath = FileList[0]
 		
-		number_files = len(glob.glob1(myPath,"*.fasta"))
+		number_files = len(glob.glob1(myPath,"*.gbk"))
        
+		#Con esto comprueba que sean el mismo numero de archivos y records.
+		self.assertEqual(number_files, number_records)
 
-		self.assertEqual(number_files, rec)
-
+		#Esto comprueba que cada record corresponda con el archivo{i} generado
+		#PENDIENTE
+		

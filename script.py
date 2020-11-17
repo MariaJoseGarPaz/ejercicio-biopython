@@ -99,7 +99,6 @@ def print_protein_and_codons_using_standard_table(sequence):
                 
         
         return diccionario
-
 def print_proteins_and_codons_using_mitocondrial_yeast_table(sequence):
 
         #Conversión de string a Seq
@@ -153,21 +152,38 @@ def print_proteins_and_codons_using_mitocondrial_yeast_table(sequence):
                 
         
         return diccionario
-def extract_sequences(file_name):
-        direction = os.path.abspath(file_name)
-
-        rec = list(SeqIO.parse( direction , "fasta"))
-        #rec = list(SeqIO.parse( direction , "genbank"))
-
-        for i in range(len(rec)):
-	
-                file_name = open(f"sequence{i+1}.fasta", "w")
-                #filename = open(f"sequence{i+1}.gbk", "w")
-                file_name.write('>' + rec[i].description +"\n" )
-                file_name.write(str(rec[i].seq))
-
-                file_name.close()
+def extract_sequences(file_name, formato):
         
-if __name__ == "__main__":
-        extract_sequences("data/sequences.fasta")
+        if ((formato == "genbank")):
+                File_Extension = os.path.splitext(file_name)
 
+                if(File_Extension[1] == ".fasta"):
+                        type_file= "fasta"
+                
+                        
+                        if (formato == "genbank"):
+                                extention = "gbk"
+                        
+                        
+                        file_aux = "auxiliar.gbk"
+
+                        SeqIO.convert(file_name, type_file, file_aux , formato, molecule_type= "DNA")
+
+
+                        direction = os.path.abspath(file_aux)
+                        rec = list(SeqIO.parse( direction , formato))
+
+
+                        for i in range(len(rec)):
+                                file_name = open(f"sequence{i+1}.gbk", "w")
+                                file_name.write(str(rec[i].format("genbank")))
+                                file_name.close()
+
+                        os.remove ("auxiliar.gbk")
+                else:
+                        print("The function only accepts files in FASTA format")
+        else:
+                print ("Error: The function only accepts  GENBANK format.")
+                
+if __name__ == "__main__":
+        extract_sequences("data/ls_orchid.fasta","genbank")
