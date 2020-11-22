@@ -88,13 +88,21 @@ class MiPrueba(unittest.TestCase):
 		self.assertRaises(Exception, script.print_proteins_and_codons_using_mitocondrial_yeast_table, None)
 
 	def test_extract_sequences(self):
+		self.assertRaises(Exception, script.extract_sequences, None, None)
+		self.assertRaises(Exception, script.extract_sequences, None, "genbank")
 		
+
+		SeqIO.convert( "data/sequences.fasta", "fasta", "file_aux" , "genbank", molecule_type= "DNA")
+		path = os.path.abspath("file_aux")
+		rec = list(SeqIO.parse( path , "genbank"))
+		os.remove("file_aux")
+
 		#Con esto lee los num_records
-		direction = os.path.abspath("data/ls_orchid.fasta")
-		rec = list(SeqIO.parse( direction , "fasta"))
+		
+		
 		number_records= len(rec)
 		#Se manda a llamar a la funcion para que genere los archivos, como no devuelve nada, nlc ponerlo en una variable 
-		script.extract_sequences("data/ls_orchid.fasta", "genbank") 
+		script.extract_sequences("data/sequences.fasta", "genbank") 
 		
 		#Con esto lee los archivos generados
 		filename= os.path.abspath("ejercicio-biopython")
@@ -107,5 +115,26 @@ class MiPrueba(unittest.TestCase):
 		self.assertEqual(number_files, number_records)
 
 		#Esto comprueba que cada record corresponda con el archivo{i} generado
-		#PENDIENTE
+		
+		for i in range(number_records):
+			
+			sequence = str(rec[i].format("genbank"))
+			filename_ = open(f"sequence{i+1}.gbk", "r") 
+			test_sequence = str(filename_.read())
+			filename_.close()
+			self.assertEqual(sequence, test_sequence)
+		
+		
+		
+		
+		
+
+		s = script.extract_sequences("data/NC_002703.gbk", "genbank")
+		self.assertEqual("Error: The function only accepts  GENBANK format and only accepts files in FASTA format", s)
+
+		s = script.extract_sequences("data/sequences.fasta", "fastq")
+		self.assertEqual("Error: The function only accepts  GENBANK format and only accepts files in FASTA format", s)
+
+		s = script.extract_sequences("data/ls_orchid.fasta", None)
+		self.assertEqual("Error: The function only accepts  GENBANK format and only accepts files in FASTA format", s)
 		
