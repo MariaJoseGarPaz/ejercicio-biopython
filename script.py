@@ -197,11 +197,10 @@ def extract_sequences(file_name, formato):
 
                 os.remove ("auxiliar.gbk")
          
-                
 
 def extract_sequences_revcomp(file_name):
-	File_Extension = os.path.splitext(file_name)
-	if(File_Extension[1] == ".fasta"):
+        File_Extension = os.path.splitext(file_name)
+        if(File_Extension[1] == ".fasta"):
 
                 type_file= "fasta"
                 direction = os.path.abspath(file_name)
@@ -218,9 +217,12 @@ def extract_sequences_revcomp(file_name):
                         file_name.write ("\n")
                 
                 file_name.close()
+        else:
+                return "Error: the function only accepts fasta format"
 
-                
+        
+               
 
 if __name__ == "__main__":
-        c =extract_sequences( "data/sequences.fasta", "genbank")
+        c = extract_sequences_revcomp("data/ls_orchid.fasta")
         print(c)
