@@ -154,7 +154,7 @@ class MiPrueba(unittest.TestCase):
 		
 		self.assertEqual(num_records, num_rec_test)
 
-		# Corrobora el contenido del archivo generado con cada record del archivo leído
+		
 		
 		reverso_comp = ""
 		archivo = open("SequencesRevComp.fasta", "r") 
