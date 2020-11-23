@@ -138,3 +138,40 @@ class MiPrueba(unittest.TestCase):
 		s = script.extract_sequences("data/ls_orchid.fasta", None)
 		self.assertEqual("Error: The function only accepts  GENBANK format and only accepts files in FASTA format", s)
 		
+	def test_extract_sequences_revcomp(self):
+
+		script.extract_sequences_revcomp("data/sequences.fasta") 
+
+		direction = os.path.abspath("data/sequences.fasta")
+		records = list(SeqIO.parse(direction, "fasta")) 
+		num_records = len(records)
+
+		 
+		direction = os.path.abspath("SequencesRevComp.fasta")
+		test = list(SeqIO.parse(direction, "fasta"))
+		num_rec_test = len(test)
+		
+		
+		self.assertEqual(num_records, num_rec_test)
+
+		# Corrobora el contenido del archivo generado con cada record del archivo leído
+		
+		reverso_comp = ""
+		archivo = open("SequencesRevComp.fasta", "r") 
+		
+		for i in range(len(records)):
+			reverso_comp += str(">" + records[i].id + "\n")
+			reversecomplement = records[i].reverse_complement()
+			reverso_comp += str(reversecomplement.seq)
+			reverso_comp += ("\n")
+			
+		reverso_comp_test = str(archivo.read())
+		
+		self.assertEqual(reverso_comp, reverso_comp_test)
+		archivo.close()
+		os.remove("SequencesRevComp.fasta")
+
+		
+		r = script.extract_sequences_revcomp("data/ls_orchid.gbk")
+		self.assertEqual("Error: the function only accepts fasta format", r)
+		self.assertRaises(Exception, script.extract_sequences_revcomp, None)
